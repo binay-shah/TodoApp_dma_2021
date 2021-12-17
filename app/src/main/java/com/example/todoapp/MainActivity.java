@@ -20,7 +20,5 @@ public class MainActivity extends AppCompatActivity {
         TodosListFragment fragment = new TodosListFragment();
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
-
-
     }
 }

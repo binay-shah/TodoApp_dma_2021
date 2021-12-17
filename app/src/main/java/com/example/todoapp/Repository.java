@@ -51,6 +51,10 @@ public class Repository {
         todos.remove(todo);
     }
 
+    public void addTodo(Todo todo){
+        todos.add(todo);
+    }
+
     public Todo update(Todo todo){
         Todo newTodo = getTodoById(todo.getId());
         newTodo.setTitle(todo.getTitle());
