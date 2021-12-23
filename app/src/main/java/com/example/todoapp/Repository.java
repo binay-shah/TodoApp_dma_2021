@@ -11,17 +11,14 @@ public class Repository {
 
     private  static Repository sInstance;
 
-    private ArrayList<Todo> todos;
+    private List<Todo> todos;
+
+    private AppDatabase database;
 
     private  Repository(Context context) {
-        todos = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Todo todo = new Todo();
-            todo.setTitle("title" + i);
-            todo.setDescription("descrption" + i);
-            todo.setPriority(1);
-            todos.add(todo);
-        }
+        database = AppDatabase.getInstance(context);
+        todos = database.todoDao().getAllTodos();
+
     }
 
     public static Repository getInstance(Context context){
@@ -36,19 +33,19 @@ public class Repository {
     }
 
     public Todo getTodoById(UUID id){
-        for (int i = 0; i < todos.size(); i++) {
-            Todo todo = todos.get(i);
-            if(todo.getId().equals(id)){
-                return todo;
-            }
-        }
+//        for (int i = 0; i < todos.size(); i++) {
+//            Todo todo = todos.get(i);
+//            if(todo.getId().equals(id)){
+//                return todo;
+//            }
+//        }
         return null;
     }
 
     public void delete(UUID id){
-       Todo todo = getTodoById(id);
-       if(todo != null)
-        todos.remove(todo);
+//       Todo todo = getTodoById(id);
+//       if(todo != null)
+//        todos.remove(todo);
     }
 
     public void addTodo(Todo todo){
@@ -56,12 +53,12 @@ public class Repository {
     }
 
     public Todo update(Todo todo){
-        Todo newTodo = getTodoById(todo.getId());
-        newTodo.setTitle(todo.getTitle());
-        newTodo.setDescription(todo.getDescription());
-        newTodo.setPriority(todo.getPriority());
-        newTodo.setUpdatedAt(new Date());
-        return newTodo;
+//        Todo newTodo = getTodoById(todo.getId());
+//        newTodo.setTitle(todo.getTitle());
+//        newTodo.setDescription(todo.getDescription());
+//        newTodo.setPriority(todo.getPriority());
+//        newTodo.setUpdatedAt(new Date());
+        return null;
     }
 
 
