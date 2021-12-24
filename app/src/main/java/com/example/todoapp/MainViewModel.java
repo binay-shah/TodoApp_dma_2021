@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class MainViewModel extends AndroidViewModel {
         repository = Repository.getInstance(application);
     }
 
-    public List<Todo> getTodos(){
+    public LiveData<List<Todo>> getTodos(){
         return repository.getAllTodos();
     }
 

@@ -2,6 +2,8 @@ package com.example.todoapp;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,13 +13,20 @@ public class Repository {
 
     private  static Repository sInstance;
 
-    private List<Todo> todos;
+    private LiveData<List<Todo>> todos;
 
     private AppDatabase database;
 
+
     private  Repository(Context context) {
         database = AppDatabase.getInstance(context);
-        todos = database.todoDao().getAllTodos();
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                todos = database.todoDao().getAllTodos();
+            }
+        });
+
 
     }
 
@@ -28,7 +37,7 @@ public class Repository {
             return sInstance;
     }
 
-    public List<Todo> getAllTodos(){
+    public LiveData<List<Todo>> getAllTodos(){
         return todos;
     }
 
@@ -49,7 +58,14 @@ public class Repository {
     }
 
     public void addTodo(Todo todo){
-        todos.add(todo);
+
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                database.todoDao().insert(todo);
+            }
+        });
+
     }
 
     public Todo update(Todo todo){

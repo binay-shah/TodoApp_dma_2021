@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
@@ -53,7 +54,9 @@ public class AddTodoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        //viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

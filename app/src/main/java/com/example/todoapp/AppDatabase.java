@@ -9,6 +9,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import java.sql.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Database(entities = {Todo.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
@@ -18,15 +20,24 @@ public  abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "todo_db";
 
     private static AppDatabase sInstance;
+    private static final Object LOCK = new Object();
+
+    static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(4);
 
     public static AppDatabase getInstance(Context context){
         if(sInstance == null){
-            sInstance = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, AppDatabase.DATABASE_NAME)
-                    //.allowMainThreadQueries()
-                    .build();
+            synchronized (LOCK) {
+                sInstance = Room.databaseBuilder(context.getApplicationContext(),
+                        AppDatabase.class, AppDatabase.DATABASE_NAME)
+                        //.allowMainThreadQueries()
+                        .build();
+            }
         }
+
         return sInstance;
     }
     public abstract TodoDao todoDao();
 }
+
+

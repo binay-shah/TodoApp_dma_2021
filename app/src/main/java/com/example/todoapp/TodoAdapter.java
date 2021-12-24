@@ -15,9 +15,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
 
     List<Todo> data;
 
-    public TodoAdapter(List<Todo> todos) {
-        data = todos;
-    }
+
 
     @NonNull
     @Override
@@ -25,6 +23,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item, parent, false);
         return new ViewHolder(view);
+    }
+
+
+    public void setData(List<Todo> todos){
+        data = todos;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -36,6 +40,9 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
+        if(data == null)
+            return 0;
+
         return data.size();
     }
 
