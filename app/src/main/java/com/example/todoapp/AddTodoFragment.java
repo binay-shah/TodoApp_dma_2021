@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddTodoFragment#} factory method to
@@ -55,12 +57,11 @@ public class AddTodoFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Todo newTodo = new Todo();
                 String title = titleEditText.getText().toString();
                 String description = descriptionEditText.getText().toString();
-                newTodo.setTitle(title);
-                newTodo.setPriority(1);
-                newTodo.setDescription(description);
+
+                Todo newTodo = new Todo(title, description, 1, new Date());
+
                 viewModel.insert(newTodo);
 
                 //FragmentManager fm = getParentFragmentManager();
