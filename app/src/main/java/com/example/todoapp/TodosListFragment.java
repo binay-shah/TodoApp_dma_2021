@@ -53,7 +53,9 @@ public class TodosListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
+        adapter = new TodoAdapter();
+        recyclerView.setAdapter(adapter);
 
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,15 +69,12 @@ public class TodosListFragment extends Fragment {
          viewModel.getTodos().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
              @Override
              public void onChanged(List<Todo> todos) {
-                 adapter = new TodoAdapter();
                  if(todos != null)
                     adapter.setData(todos);
              }
          });
 
 
-
-        recyclerView.setAdapter(adapter);
     }
 
 
